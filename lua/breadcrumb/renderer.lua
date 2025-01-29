@@ -3,6 +3,9 @@ local utils = require("breadcrumb.utils")
 M = {}
 
 local config = {
+	icons = {
+		["Folder"] = "󰉋 ",
+	},
 	disabled_filetype = {
 		"",
 		"help",
@@ -43,17 +46,14 @@ local function get_filepath()
 		local root_parts = utils.split(root, "/")
 		for _, rp in ipairs(root_parts) do
 			local hl_separator = "%#" .. config.highlight_group.separator .. "#" .. config.separator .. "%*"
-			local hl_rp = "%#" .. config.highlight_group.component .. "#" .. rp .. "%*"
+			local hl_rp = config.icons["Folder"] .. "%#" .. config.highlight_group.component .. "#" .. rp .. "%*"
 			value = value .. hl_rp .. " " .. hl_separator .. " "
 		end
 	end
 
 	if not utils.isempty(cur_filename) then
-		local file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
-			cur_filename,
-			extension,
-			{ default = true }
-		)
+		local file_icon, file_icon_color =
+			require("nvim-web-devicons").get_icon_color(cur_filename, extension, { default = true })
 
 		local hl_group = "FileIconColor" .. extension
 
@@ -118,7 +118,7 @@ function M.create_breadcrumb()
 end
 
 function M.get_filepath()
-  return get_filepath()
+	return get_filepath()
 end
 
 return M
