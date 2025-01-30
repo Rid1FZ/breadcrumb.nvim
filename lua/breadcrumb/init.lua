@@ -93,8 +93,8 @@ local default_config = {
 }
 
 local function add_defaultHighlight()
-	vim.cmd("highlight BreadcrumbText guifg=#c0c0c0")
-	vim.cmd("highlight BreadcrumbSeparator guifg=#c0c0c0")
+	vim.cmd("highlight BreadcrumbText guifg=#cdd6f4")
+	vim.cmd("highlight BreadcrumbSeparator guifg=#6c7086")
 end
 
 local function disable_breadcrumb()
