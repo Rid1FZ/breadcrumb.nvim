@@ -14,6 +14,7 @@ local config = {
 	highlight_group = {
 		component = "BreadcrumbText",
 		separator = "BreadcrumbSeparator",
+		folder = "BreadcrumbIconsFolder",
 	},
 }
 
@@ -46,8 +47,9 @@ local function get_filepath()
 		local root_parts = utils.split(root, "/")
 		for _, rp in ipairs(root_parts) do
 			local hl_separator = "%#" .. config.highlight_group.separator .. "#" .. config.separator .. "%*"
-			local hl_rp = config.icons["Folder"] .. "%#" .. config.highlight_group.component .. "#" .. rp .. "%*"
-			value = value .. hl_rp .. " " .. hl_separator .. " "
+			local hl_icon = "%#" .. config.highlight_group.folder .. "#" .. config.icons["Folder"] .. "%*"
+			local hl_rp = "%#" .. config.highlight_group.component .. "#" .. rp .. "%*"
+			value = value .. hl_icon .. hl_rp .. " " .. hl_separator .. " "
 		end
 	end
 
