@@ -10,7 +10,7 @@ local config = {
 		"",
 		"help",
 	},
-	separator = ">",
+	separator = "",
 	highlight_group = {
 		component = "BreadcrumbText",
 		separator = "BreadcrumbSeparator",
@@ -61,7 +61,7 @@ local function get_filepath()
 
 		vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
 		if utils.isempty(file_icon) then
-			file_icon = ""
+			file_icon = ""
 			file_icon_color = ""
 		end
 		local hl_icon = "%#" .. hl_group .. "#" .. file_icon .. "%*"
