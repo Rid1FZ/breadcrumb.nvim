@@ -1,7 +1,17 @@
 ## 📦 Installation
 
+### Lazy.nvim
+
 ```lua
-use("loctvl842/breadcrumb.nvim", requires = {"nvim-tree/nvim-web-devicons"})
+{
+    "Rid1FZ/breadcrumb.nvim",
+    dependencies = {
+        "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+        require("breadcrumb").setup({})
+    end
+}
 ```
 
 ## ⚙️ Configuration
@@ -9,41 +19,83 @@ use("loctvl842/breadcrumb.nvim", requires = {"nvim-tree/nvim-web-devicons"})
 ```lua
 require("breadcrumb").setup({
 	disabled_filetype = {
-		"",
+		"NeogitCommitMessage",
+		"netrw",
 		"help",
+		"startify",
+		"dashboard",
+		"lazy",
+		"neo-tree",
+		"neogitstatus",
+		"NvimTree",
+		"Trouble",
+		"alpha",
+		"lir",
+		"Outline",
+		"git",
+		"spectre_panel",
+		"toggleterm",
+		"DressingSelect",
+		"Jaq",
+		"harpoon",
+		"dap-repl",
+		"dap-terminal",
+		"dapui_console",
+		"dapui_hover",
+		"lab",
+		"notify",
+		"noice",
+		"neotest-summary",
+		"terminal",
+		"mason",
+		"",
 	},
 	icons = {
-		File = " ",
-		Module = " ",
-		Namespace = " ",
-		Package = " ",
-		Class = " ",
-		Method = " ",
-		Property = " ",
-		Field = " ",
-		Constructor = " ",
-		Enum = "練",
-		Interface = "練",
-		Function = " ",
-		Variable = " ",
-		Constant = " ",
-		String = " ",
-		Number = " ",
-		Boolean = "◩ ",
-		Array = " ",
-		Object = " ",
-		Key = " ",
-		Null = "ﳠ ",
+		Namespace = "󰌗 ",
+		Text = "󰉿 ",
+		Method = "󰆧 ",
+		Function = "󰊕 ",
+		Constructor = " ",
+		Field = " ",
+		Variable = "󰀫 ",
+		Class = "󰠱 ",
+		Interface = " ",
+		Module = " ",
+		Property = "󰜢 ",
+		Unit = "󰑭 ",
+		Value = "󰎠 ",
+		Enum = " ",
+		Keyword = "󰌋 ",
+		Snippet = " ",
+		Color = "󰏘 ",
+		File = "󰈚 ",
+		Reference = "󰈇 ",
+		Folder = "󰉋 ",
 		EnumMember = " ",
-		Struct = " ",
+		Constant = "󰏿 ",
+		Struct = "󰙅 ",
 		Event = " ",
-		Operator = " ",
-		TypeParameter = " ",
+		Operator = "󰆕 ",
+		TypeParameter = "󰊄 ",
+		Table = " ",
+		Object = "󰅩 ",
+		Tag = " ",
+		Array = " ",
+		Boolean = " ",
+		Number = " ",
+		Null = "󰟢 ",
+		String = " ",
+		Calendar = " ",
+		Watch = "󰥔 ",
+		Package = " ",
+		Copilot = " ",
+		Codeium = " ",
+		TabNine = " ",
 	},
-	separator = ">",
+	color_icons = true,
+	separator = "",
 	depth_limit = 0,
 	depth_limit_indicator = "..",
-    	color_icons = true,
 	highlight_group = {
 		component = "BreadcrumbText",
 		separator = "BreadcrumbSeparator",
@@ -54,24 +106,27 @@ require("breadcrumb").setup({
 To have **breadcrumb**, it must be attached to lsp server.
 
 Example:
+
 ```lua
 local breadcrumb = require("breadcrumb")
 
 local on_attach = function(client, bufnr)
-    ...
     if client.server_capabilities.documentSymbolProvider then
         breadcrumb.attach(client, bufnr)
     end
-    ...
 end
 ```
 
 ## 🚀 Usage
+
 - We can turn on `breadcrumb` by put this in the config file:
+
 ```lua
 require("breadcrumb").init()
 ```
+
 - Using method `get_breadcrumb()` combine with status line plugin for example `lualine`
+
 ```lua
 local breadcrumb = function()
 	local breadcrumb_status_ok, breadcrumb = pcall(require, "breadcrumb")
@@ -104,8 +159,10 @@ lualine.setup(config)
 ```
 
 ## Command
+
 - `BreadcrumbEnable` command to enable `breadcrumb`
 - `BreadcrumbDisable` command to disable `breadcrumb`
 
 ## TODO
+
 - [x] add default highlight for icons
