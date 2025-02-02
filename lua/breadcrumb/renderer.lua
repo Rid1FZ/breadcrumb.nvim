@@ -84,17 +84,18 @@ local function get_filepath()
     if not utils.isempty(cur_filename) then
         local file_icon, file_icon_color =
             require("nvim-web-devicons").get_icon_color(cur_filename, extension, { default = true })
-
-        local hl_group = "FileIconColor" .. extension
-
-        vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
         if utils.isempty(file_icon) then
             file_icon = ""
             file_icon_color = ""
         end
+
+        local hl_group = "FileIconColor" .. extension
+        vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
+
         local hl_icon = "%#" .. hl_group .. "#" .. file_icon .. "%*"
         local hl_filename = "%#" .. config.highlight_group.component .. "#" .. cur_filename .. "%*"
         value = value .. hl_icon .. " " .. hl_filename
+
         M.filename_output = value
     end
     return value
