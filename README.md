@@ -1,3 +1,6 @@
+# breadcrumb.nvim
+This repository is a fork of [loctvl842/breadcrumb.nvim](https://github.com/loctvl842/breadcrumb.nvim)
+
 ## 📦 Installation
 
 ### Lazy.nvim
@@ -162,7 +165,3 @@ lualine.setup(config)
 
 - `BreadcrumbEnable` command to enable `breadcrumb`
 - `BreadcrumbDisable` command to disable `breadcrumb`
-
-## TODO
-
-- [x] add default highlight for icons
