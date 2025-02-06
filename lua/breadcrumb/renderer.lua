@@ -40,6 +40,7 @@ local config = {
     },
     separator = "",
     highlight_group = {
+        inactive_winbar = "BreadcrumbInactiveWinbar",
         component = "BreadcrumbText",
         separator = "BreadcrumbSeparator",
         folder = "BreadcrumbIconsFolder",
@@ -50,14 +51,52 @@ function M.setup(user_config)
     config = vim.tbl_deep_extend("force", config, user_config)
 end
 
--- @return string contain path to file
+-- @return string containing filename
+local function get_filename(inactive)
+    local value = ""
+    local inactive_hl_group = config.highlight_group.inactive_winbar
+    local cur_filename = vim.fn.expand("%:t")
+    local extension = vim.fn.expand("%:e")
+
+    if not utils.isempty(cur_filename) then
+        local file_icon, file_icon_color =
+            require("nvim-web-devicons").get_icon_color(cur_filename, extension, { default = true })
+
+        if utils.isempty(file_icon) then
+            file_icon = ""
+            file_icon_color = ""
+        end
+
+        local hl_group = ""
+        if inactive then
+            hl_group = inactive_hl_group
+        else
+            hl_group = "FileIconColor" .. extension
+            vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
+        end
+
+        local hl_icon = "%#" .. hl_group .. "#" .. file_icon .. "%*"
+        local hl_filename = "%#"
+            .. (inactive and inactive_hl_group or config.highlight_group.component)
+            .. "#"
+            .. cur_filename
+            .. "%*"
+
+        value = value .. hl_icon .. " " .. hl_filename
+    end
+
+    return value
+end
+
+-- @return string containing path to file
 local function get_filepath()
     local cur_filename = vim.fn.expand("%:t")
     if M.filename == cur_filename then
-        return M.filename_output
+        return M.filepath_output
     end
     M.filename = cur_filename
 
+    local value = " "
     local cwd = vim.fn.getcwd()
     local project_dir = vim.split(cwd, "/")
     local project_name = project_dir[#project_dir]
@@ -68,8 +107,6 @@ local function get_filepath()
     if not utils.isempty(i) then
         root = string.sub(root, i)
     end
-    local extension = vim.fn.expand("%:e")
-    local value = " "
 
     if not utils.isempty(root) and root ~= "." then
         local root_parts = utils.split(root, "/")
@@ -81,23 +118,9 @@ local function get_filepath()
         end
     end
 
-    if not utils.isempty(cur_filename) then
-        local file_icon, file_icon_color =
-            require("nvim-web-devicons").get_icon_color(cur_filename, extension, { default = true })
-        if utils.isempty(file_icon) then
-            file_icon = ""
-            file_icon_color = ""
-        end
+    value = value .. get_filename(false)
+    M.filepath_output = value
 
-        local hl_group = "FileIconColor" .. extension
-        vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
-
-        local hl_icon = "%#" .. hl_group .. "#" .. file_icon .. "%*"
-        local hl_filename = "%#" .. config.highlight_group.component .. "#" .. cur_filename .. "%*"
-        value = value .. hl_icon .. " " .. hl_filename
-
-        M.filename_output = value
-    end
     return value
 end
 
@@ -145,6 +168,12 @@ function M.create_breadcrumb()
             breadcrumb_output = breadcrumb_output .. mod
         end
     end
+    return breadcrumb_output
+end
+
+-- @return string containing filename and icon
+function M.create_inactive_breadcrumb()
+    local breadcrumb_output = get_filename(true)
     return breadcrumb_output
 end
 

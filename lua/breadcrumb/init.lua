@@ -87,6 +87,7 @@ local default_config = {
     depth_limit = 0,
     depth_limit_indicator = "..",
     highlight_group = {
+        inactive_winbar = "BreadcrumbInactiveWinbar",
         component = "BreadcrumbText",
         separator = "BreadcrumbSeparator",
     },
@@ -95,6 +96,7 @@ local default_config = {
 local function add_defaultHighlight()
     vim.cmd("highlight BreadcrumbText guifg=#cdd6f4")
     vim.cmd("highlight BreadcrumbSeparator guifg=#6c7086")
+    vim.cmd("highlight BreadcrumbInactiveWinbar guifg=#6c7086")
 end
 
 local function disable_breadcrumb()
@@ -202,6 +204,16 @@ function M.get_breadcrumb()
         return ""
     end
     return renderer.create_breadcrumb()
+end
+
+function M.get_inactive_breadcrumb()
+    if not isBreadcrumb_enabled then
+        return ""
+    end
+    if excludes() then
+        return ""
+    end
+    return renderer.create_inactive_breadcrumb()
 end
 
 return M
