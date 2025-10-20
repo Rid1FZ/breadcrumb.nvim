@@ -1,3 +1,6 @@
+# ⚠️Archived⚠️
+I am no longer using this tool. So, it is being archived.
+
 # breadcrumb.nvim
 This repository is a fork of [loctvl842/breadcrumb.nvim](https://github.com/loctvl842/breadcrumb.nvim)
 
